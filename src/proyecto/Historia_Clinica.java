@@ -1,5 +1,9 @@
 package proyecto;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class Historia_Clinica extends Paciente{
 	
 	private String tratamiento;
@@ -20,6 +24,18 @@ public class Historia_Clinica extends Paciente{
 	
 	public void generar_Informe() {
 		System.out.println("Nombre: "+getNombre());
+		File archivo = new File("./dowloads/historia_clinica.txt");
+		FileWriter escritura;
+		try {
+			escritura = new FileWriter(archivo, true);
+			escritura.write("HISTORIAL CLINICO: "+"\n"+
+					"Paciente: "+getNombre()+" "+getApellido()+"\n"+
+					"Tratamientos: "+getTratamiento());
+			escritura.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Se ha generado y descargado su historal clinico.Comprueba su descarga.");
 	}
 
 }

@@ -77,10 +77,11 @@ public class Paciente extends Persona{
 				"** \t ELEGIR TIPO DE ATENCION    \t  **"+"\n"+
 				"** \t DIGITE UN NUMERO     \t\t  **"+"\n"+
 				"** --> Opcion 1 : Mostrar mis datos   \t\t  **"+"\n"+
-				"** --> Opcion 2 : Atencion Normal \t  **"+"\n"+
-				"** --> Opcion 3 : Atencion Emergencia \t  **"+"\n"+
-				"** --> Opcion 4 : Cancelar Turno "+"\n"+
-				"** --> Opcion 5 : Cerrar Sesion \t  **"+"\n"+
+				"** --> Opcion 2 : Obtener Turno Normal \t  **"+"\n"+
+				"** --> Opcion 3 : obtener Turno Emergencia \t  **"+"\n"+
+				"** --> Opcion 4 : Generar Historia Clinica "+"\n"+
+				"** --> Opcion 5 : Cancelar un Turno "+"\n"+
+				"** --> Opcion 6 : Cerrar Sesion \t  **"+"\n"+
 				"********************************************");
 		int opcion = super.open_Scanner().nextInt();
 		if(opcion>0 & opcion<=5) {
@@ -88,17 +89,37 @@ public class Paciente extends Persona{
 				case 1: System.out.println(mostrar_Datos());
 						panel_Paciente();
 						break;
+						
 				case 2: setEmergencia(false);
 						estado_Turno();
 						elegir_Turno();
 						break;
+						
 				case 3: setEmergencia(true);
 						estado_Turno();
 						elegir_Turno();
 						break;
-				case 4: cancelar_Turno();
+						
+				case 4: Historia_Clinica HC = new Historia_Clinica(
+						getNombre(),
+						getApellido(),
+			            getDni(),
+			            getEdad(),
+			            getDomicilio(),
+			            getTelefono(),
+			            getGenero(),
+			            getEmail(),
+			            getUsuario(),
+			            getClave(),
+			            isEmergencia(),
+			            "Extraccón"
+						);
+						HC.generar_Informe();
+					
+				case 5: cancelar_Turno();
 						break;
-				case 5: super.panel_Persona();
+				
+				case 6: super.panel_Persona();
 						break;
 					
 			}
