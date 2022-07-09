@@ -146,7 +146,7 @@ public class Persona {
 				case 2:	registrar_Usuario();
 						break;
 				case 3:	System.out.print("Proyecto Dr.Muelas"+"\n"+
-								"1000 Programadores Salteños"+"\n"+
+								"1000 Programadores Salteños - JAVA 2022"+"\n"+
 								"Universidad Nacional de Salta(UnSa)"+"\n");
 						break;
 			}
