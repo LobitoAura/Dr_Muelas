@@ -13,11 +13,6 @@ public class Paciente extends Persona{
 		this.emergencia = emergencia;
 	}
 
-	public Paciente() {
-		super();
-			
-	}
-
 	public boolean isEmergencia() {
 		return emergencia;
 	}
@@ -26,49 +21,18 @@ public class Paciente extends Persona{
 		this.emergencia = emergencia;
 	}
 	
+	public Historia_Clinica generar_HC() {
+		Historia_Clinica HC = new Historia_Clinica(getNombre(),getApellido(),getDni(),
+				getEdad(),getDomicilio(),getTelefono(),getGenero(),getEmail(),getUsuario(),
+	            getClave(),isEmergencia(),"Extraccón");
+		return HC;
+	}
+	
 	public boolean sector_Edad() {
 		if(super.getEdad()>14) {
 			return true;
 		}else {
 			return false;
-		}
-	}
-	
-	public void iniciar_Usuario() {
-		String usuario,clave;
-		System.out.println("--> INICIAR SESIÓN <--");
-		System.out.println("Ingresar Usuario: ");
-		usuario = open_Scanner().next();
-		System.out.println("Ingresar clave: ");
-		clave = open_Scanner().next();
-		System.out.println("COMPROBANDO CREDENCIALES... ");
-		String SELECT_USUARIO_CLAVE = "SELECT * FROM dr_muelas.persona WHERE usuario = '"+usuario+"' AND clave = '"+clave+"'";
-		try{
-			
-			Statement sql = open_Connection().createStatement();
-
-			ResultSet rs = sql.executeQuery(SELECT_USUARIO_CLAVE);
-			if (rs.next()) {
-		    	System.out.println("BIENVENIDO "+" "+usuario);
-		    	
-			    setNombre(rs.getString("nombre"));
-			    setApellido(rs.getString("apellido"));
-			    setDni(rs.getInt("dni"));
-			    setEdad(rs.getInt("edad"));
-			    setDomicilio(rs.getString("domicilio"));
-			    setTelefono(rs.getString("telefono"));
-			    setGenero(rs.getString("genero"));
-			    setEmail(rs.getString("email"));
-			    setUsuario(rs.getString("usuario"));
-			    setClave(rs.getString("clave"));
-			    
-			    panel_Paciente();   
-			//Retiene los errores y lo muestra
-			}else {
-		    	System.out.println("Usuario o contraseña incorrectos");
-		    		}
-		}catch (Exception e){
-			System.out.println("ERROR AL BUSCAR DATOS: "+e);
 		}
 	}
 	
@@ -91,30 +55,17 @@ public class Paciente extends Persona{
 						break;
 						
 				case 2: setEmergencia(false);
-						estado_Turno();
+						Turno.estado_Turno();
 						elegir_Turno();
 						break;
 						
 				case 3: setEmergencia(true);
-						estado_Turno();
+						Turno.estado_Turno();
 						elegir_Turno();
 						break;
 						
-				case 4: Historia_Clinica HC = new Historia_Clinica(
-						getNombre(),
-						getApellido(),
-			            getDni(),
-			            getEdad(),
-			            getDomicilio(),
-			            getTelefono(),
-			            getGenero(),
-			            getEmail(),
-			            getUsuario(),
-			            getClave(),
-			            isEmergencia(),
-			            "Extraccón"
-						);
-						HC.generar_Informe();
+				case 4: generar_HC().generar_pacienteHC();
+						break;
 					
 				case 5: cancelar_Turno();
 						break;
@@ -126,39 +77,6 @@ public class Paciente extends Persona{
 		}else {
 			System.out.println("INGRESO UNA OPCION NO VALIDA");
 		}
-	}
-	
-	public void estado_Turno() {
-		String SELECT_TURNO = "SELECT * FROM turno;";
-		
-		try{
-			
-			Statement sql = super.open_Connection().createStatement();
-			ResultSet rs = sql.executeQuery(SELECT_TURNO);
-			String disponibilidad,sector;
-			
-            while(rs.next()) {
-            	//Recibir por tipo de columna
-            	int sql_Id = rs.getInt("id");
-            	boolean sql_sector = rs.getBoolean("categoria");
-            	String sql_Fecha = rs.getString("fecha");
-            	boolean sql_disponibilidad = rs.getBoolean("disponibilidad");
-            	
-            	if (sql_disponibilidad == false & sql_sector == sector_Edad()) {
-            		disponibilidad = "Disponible";
-            		sector = "SALA A (Menores)";
-            	}else {
-            		disponibilidad = "No Disponible";
-            		sector = "SALA B (Mayores)";
-            	}
-            	//mostrar valores
-            	System.out.println("-> N°"+sql_Id+" "+sector+"	Estado:"+disponibilidad+" "+sql_Fecha);
-            }
-            rs.close();
-      
-        }catch (Exception e){
-        	System.out.println(e);
-        }
 	}
 	
 	public void elegir_Turno() {
@@ -181,6 +99,7 @@ public class Paciente extends Persona{
 					        }	
 						super.close_Connection();	
 						break;
+						
 				case 2: System.out.println("A DECIDIDO CANCELAR LA SELECCION DE TURNO");
 						break;
 			}

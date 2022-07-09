@@ -1,69 +1,83 @@
 package proyecto;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Scanner;
+
 public class Turno {
-	private int idTurno; 
-	private int dniUsers; 
-	private String Fecha; 
-	private String Hora; 
-	private int NroCons;
-	private boolean Estado;
 	
-	public Turno(int idTurno, int dniUsers, String fecha, String hora, int nroCons, boolean estado) {
-		this.idTurno = idTurno;
-		this.dniUsers = dniUsers;
-		this.Fecha = fecha;
-		this.Hora = hora;
-		this.NroCons = nroCons;
-		this.Estado = estado;
-	}
+	public static void generar_Turno(String cargo) {
+		Scanner teclado = new Scanner(System.in);
+		System.out.println("BIENVENIDO ADMINISTRADOR - FUNCION: "+cargo);
+		System.out.println("¿Cuantos turnos va a crear?");
+		int cantidad = teclado.nextInt();
+		System.out.println("Ingrese la fecha:");
+		String fecha = teclado.nextLine();	
+		System.out.println("Ingrese la hora:");
+		int hora = teclado.nextInt();
+ 
+		String INSERT_TURNO = "INSERT INTO turno(categoria,fecha,disponibilidad) VALUES(?,?,?)";
 
-	public int getIdTurno() {
-		return idTurno;
-	}
-
-	public void setIdTurno(int idTurno) {
-		this.idTurno = idTurno;
-	}
-
-	public int getDniUsers() {
-		return dniUsers;
-	}
-
-	public void setDniUsers(int dniUsers) {
-		this.dniUsers = dniUsers;
-	}
-
-	public String getFecha() {
-		return Fecha;
-	}
-
-	public void setFecha(String fecha) {
-		Fecha = fecha;
-	}
-
-	public String getHora() {
-		return Hora;
-	}
-
-	public void setHora(String hora) {
-		Hora = hora;
-	}
-
-	public int getNroCons() {
-		return NroCons;
-	}
-
-	public void setNroCons(int nroCons) {
-		NroCons = nroCons;
-	}
-
-	public boolean isEstado() {
-		return Estado;
-	}
-
-	public void setEstado(boolean estado) {
-		Estado = estado;
+		boolean flag;
+			try{
+				PreparedStatement sql = ConnectionDB.getConnection().prepareStatement(INSERT_TURNO);
+				for(int i=0; i<cantidad; i++) {
+					String fecha_turno = fecha+" "+hora+" Hs.";
+					if(i<(cantidad / 2)) {
+						flag = true;
+					}else {
+						flag = false;
+						}
+			        //set the values for the prepared statement
+			        sql.setBoolean(1, flag); // El segundo valor es 0=False,1=Verdadero
+			        sql.setString(2, fecha_turno);
+			        sql.setInt(3, 0);
+		
+			        //Executar los statment
+			        sql.executeUpdate();
+			        
+			        hora = hora + 1;
+				}
+				System.out.println("LOS TURNOS SE ACTUALIZARON A LA BASE DE DATOS");
+		    }catch (Exception e){
+		    	System.out.println(e);
+		    }            
+		ConnectionDB.disconnect();
+		teclado.close();
 	}
 	
+	public static void estado_Turno() {
+		String SELECT_TURNO = "SELECT * FROM turno;";
+		
+		try{
+			
+			Statement sql = ConnectionDB.getConnection().createStatement();
+			ResultSet rs = sql.executeQuery(SELECT_TURNO);
+			String disponibilidad,sector;
+			
+            while(rs.next()) {
+            	//Recibir por tipo de columna
+            	int sql_Id = rs.getInt("id");
+            	boolean sql_sector = rs.getBoolean("categoria");
+            	String sql_Fecha = rs.getString("fecha");
+            	boolean sql_disponibilidad = rs.getBoolean("disponibilidad");
+            	
+            	if (sql_disponibilidad == false & sql_sector == false) {
+            		disponibilidad = "Disponible";
+            		sector = "SALA A (Menores)";
+            	}else {
+            		disponibilidad = "No Disponible";
+            		sector = "SALA B (Mayores)";
+            	}
+            	//mostrar valores
+            	System.out.println("-> N°"+sql_Id+" "+sector+"	Estado:"+disponibilidad+" "+sql_Fecha);
+            }
+            rs.close();
+      
+        }catch (Exception e){
+        	System.out.println(e);
+        }
+	}
 	
 }

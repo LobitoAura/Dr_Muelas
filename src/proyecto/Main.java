@@ -1,27 +1,37 @@
 package proyecto;
 
+import java.util.Scanner;
+
 public class Main {
 
 	public static void main(String[] args) {
 		
 		//Hacer panel para ingresar como usuario o admin
+		Scanner teclado = new Scanner(System.in);
+		System.out.println("****************************************************"+"\n"+
+						"**   BIENVENIDO AL CONSULTORIO Dr. Muelas \t  **"+"\n"+
+						"**           DIGITE UN NUMERO             \t  **"+"\n"+
+						"** --> Opcion 1 : Generar turnos          \t  **"+"\n"+
+						"** --> Opcion 2 : Iniciar registro        \t  **"+"\n"+
+						"** --> Opcion 3 : Información             \t  **"+"\n"+
+						"****************************************************");
+		int opcion = teclado.nextInt();
+		switch(opcion) {
 		
-		
-		
-		//Administracion admin = new Administracion("Secretaria");
-		
-		//admin.generar_Turno();
-		
-		Persona persona = new Persona();
-		
-		persona.panel_Persona();
-		
-		//Historia_Clinica informe = new Historia_Clinica(persona.to);
-		
-		//System.out.println(persona.mostrar_Datos());
-		
-		//Paciente paciente = new Paciente();
-		//paciente.panel_Paciente();
+		case 1: Administracion admin = new Administracion("Secretaria");
+				admin.generar_Turno();
+				break;
+				
+		case 2:	Persona persona = new Persona();
+				persona.panel_Persona();
+				break;
+				
+		case 3:	System.out.print("Proyecto Dr.Muelas"+"\n"+
+								"1000 Programadores Salteños - JAVA 2022"+"\n"+
+								"Universidad Nacional de Salta(UnSa)"+"\n");
+				break;
+		}
+		teclado.close();		
 	}
 
 }

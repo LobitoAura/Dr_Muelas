@@ -22,7 +22,7 @@ public class Historia_Clinica extends Paciente{
 		this.tratamiento = tratamiento;
 	}
 	
-	public void generar_Informe() {
+	public void generar_pacienteHC() {
 		System.out.println("Nombre: "+getNombre());
 		File archivo = new File("./dowloads/historia_clinica.txt");
 		FileWriter escritura;

@@ -115,6 +115,12 @@ public class Persona {
 		this.clave = clave;
 	}
 	
+	public Paciente generar_Paciente() {
+		Paciente paciente = new Paciente(getNombre(),getApellido(),getDni(),getEdad(),
+		getDomicilio(),getTelefono(),getGenero(),getEmail(),getUsuario(),getClave(),false);
+		return paciente;
+	}
+	
 	public Scanner open_Scanner() {
 		Scanner teclado = new Scanner(System.in);
 		return teclado;
@@ -130,31 +136,63 @@ public class Persona {
 	}
 	
 	public void panel_Persona(){
-		while(true) {
-			System.out.println("********************************************"+"\n"+
-					"**  BIENVENIDO AL CONSULTORIO Dr. Muelas  **"+"\n"+
-					"** \t DIGITE UN NUMERO             \t  **"+"\n"+
-					"** --> Opcion 1 : Iniciar Sesion   \t  **"+"\n"+
-					"** --> Opcion 2 : Registrar        \t  **"+"\n"+
-					"** --> Opcion 3 : Información      \t  **"+"\n"+
-					"********************************************");
-			int opcion = open_Scanner().nextInt();
-			switch(opcion) {
-				case 1: Paciente paciente = new Paciente();
-						paciente.iniciar_Usuario();
-						break;
-				case 2:	registrar_Usuario();
-						break;
-				case 3:	System.out.print("Proyecto Dr.Muelas"+"\n"+
-								"1000 Programadores Salteños - JAVA 2022"+"\n"+
-								"Universidad Nacional de Salta(UnSa)"+"\n");
-						break;
-			}
+		System.out.println("********************************************"+"\n"+
+						"**      REGISTRAR O INICIAR SESIÓN \t  **"+"\n"+
+						"**         DIGITE UN NUMERO        \t  **"+"\n"+
+						"** --> Opcion 1 : Iniciar Sesion   \t  **"+"\n"+
+						"** --> Opcion 2 : Registrar        \t  **"+"\n"+
+						"** --> Opcion 3 : Salir            \t  **"+"\n"+
+						"********************************************");
+		int opcion = open_Scanner().nextInt();
+		switch(opcion) {
+			case 1: iniciar_Usuario();
+					generar_Paciente().panel_Paciente();
+					break;
+					
+			case 2:	registrar_Usuario();
+					break;
+					
+			case 3:	break;
 		}
 	}
 	
 	//Se trae los datos de la BD para hacer una verificacion si es un usuario registrado
-	
+	public void iniciar_Usuario() {
+		String usuario,clave;
+		System.out.println("--> INICIAR SESIÓN <--");
+		System.out.println("Ingresar Usuario: ");
+		usuario = open_Scanner().next();
+		System.out.println("Ingresar clave: ");
+		clave = open_Scanner().next();
+		System.out.println("COMPROBANDO CREDENCIALES... ");
+		String SELECT_USUARIO_CLAVE = "SELECT * FROM dr_muelas.persona WHERE usuario = '"+usuario+"' AND clave = '"+clave+"'";
+		try{
+			
+			Statement sql = open_Connection().createStatement();
+
+			ResultSet rs = sql.executeQuery(SELECT_USUARIO_CLAVE);
+			if (rs.next()) {
+		    	System.out.println("BIENVENIDO "+" "+usuario);
+		    	
+			    setNombre(rs.getString("nombre"));
+			    setApellido(rs.getString("apellido"));
+			    setDni(rs.getInt("dni"));
+			    setEdad(rs.getInt("edad"));
+			    setDomicilio(rs.getString("domicilio"));
+			    setTelefono(rs.getString("telefono"));
+			    setGenero(rs.getString("genero"));
+			    setEmail(rs.getString("email"));
+			    setUsuario(rs.getString("usuario"));
+			    setClave(rs.getString("clave"));
+			      
+			//Retiene los errores y lo muestra
+			}else {
+		    	System.out.println("Usuario o contraseña incorrectos");
+		    		}
+		}catch (Exception e){
+			System.out.println("ERROR AL BUSCAR DATOS: "+e);
+		}
+	}
 	//Este metodo es para registrar a los nuevos usuarios,se necesitan los get y setter.
 	public void registrar_Usuario() {
 		System.out.println("--> REGISTRAR NUEVO USUARIO <--");
