@@ -1,7 +1,9 @@
 # Dr_Muelas
 Proyecto Integrador 1000 Programadores Salteños - JAVA 2022
 
-Contexto
+[![Captura-de-pantalla-2022-07-08-223759.png](https://i.postimg.cc/VNzPjSj6/Captura-de-pantalla-2022-07-08-223759.png)](https://postimg.cc/Xr1PWY1S)
+
+Contexto:
 Dr. Muelas es un consultorio odontológico que atiende a pacientes en general. El
 consultorio está dividido en 3 sectores. En el primer sector solo se atienden a chicos de
 entre 3 a 12 años, en el segundo sector atienden a partir de los 13 años en adelante y el
