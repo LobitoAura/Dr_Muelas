@@ -23,11 +23,7 @@ public class Turno {
 				PreparedStatement sql = ConnectionDB.getConnection().prepareStatement(INSERT_TURNO);
 				for(int i=0; i<cantidad; i++) {
 					String fecha_turno = fecha+" "+hora+" Hs.";
-					if(i<(cantidad / 2)) {
-						flag = true;
-					}else {
-						flag = false;
-						}
+					flag = i < (cantidad / 2);
 			        //set the values for the prepared statement
 			        sql.setBoolean(1, flag); // El segundo valor es 0=False,1=Verdadero
 			        sql.setString(2, fecha_turno);
@@ -62,7 +58,7 @@ public class Turno {
             	String sql_Fecha = rs.getString("fecha");
             	boolean sql_disponibilidad = rs.getBoolean("disponibilidad");
             	
-            	if (sql_disponibilidad == false & sql_sector == false) {
+            	if (!sql_disponibilidad & !sql_sector) {
             		disponibilidad = "Disponible";
             		sector = "SALA A (Menores)";
             	}else {
@@ -70,7 +66,7 @@ public class Turno {
             		sector = "SALA B (Mayores)";
             	}
             	//mostrar valores
-            	System.out.println("-> N°"+sql_Id+" "+sector+"	Estado:"+disponibilidad+" "+sql_Fecha);
+            	System.out.println("-> N°"+sql_Id+"		"+sector+"	Estado:"+disponibilidad+"		"+sql_Fecha);
             }
             rs.close();
       

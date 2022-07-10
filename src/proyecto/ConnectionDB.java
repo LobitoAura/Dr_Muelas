@@ -18,10 +18,8 @@ public class ConnectionDB {
 		        Class.forName(JDBC_DRIVER);
 		        conn = DriverManager.getConnection(DB_URL,USER,PASS);
 		        //System.out.println("CONEXION EXITOSA");
-		    }catch(SQLException se){
+		    } catch(Exception se){
 	            se.printStackTrace();
-	        }catch(Exception e){
-	            e.printStackTrace();
 	        }
 		}
 		return conn;

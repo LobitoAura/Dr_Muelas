@@ -33,14 +33,12 @@ public class Administracion {
 						"** --> Opcion 2 : Generar Informe        \t  **"+"\n"+
 						"****************************************************");
 		int opcion = teclado.nextInt();
-		switch(opcion) {
-		
-		case 1: Administracion admin = new Administracion("Secretaria");
+		switch (opcion) {
+			case 1 -> {
+				Administracion admin = new Administracion("Secretaria");
 				admin.generar_Turno();
-				break;
-				
-		case 2:	generar_Informe();
-				break;
+			}
+			case 2 -> generar_Informe();
 		}
 		teclado.close();
 	}

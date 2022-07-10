@@ -22,18 +22,13 @@ public class Paciente extends Persona{
 	}
 	
 	public Historia_Clinica generar_HC() {
-		Historia_Clinica HC = new Historia_Clinica(getNombre(),getApellido(),getDni(),
+		return new Historia_Clinica(getNombre(),getApellido(),getDni(),
 				getEdad(),getDomicilio(),getTelefono(),getGenero(),getEmail(),getUsuario(),
 	            getClave(),isEmergencia(),"Extraccón");
-		return HC;
 	}
 	
 	public boolean sector_Edad() {
-		if(super.getEdad()>14) {
-			return true;
-		}else {
-			return false;
-		}
+		return super.getEdad() > 14;
 	}
 	
 	public void panel_Paciente(){
@@ -50,30 +45,24 @@ public class Paciente extends Persona{
 				"********************************************");
 		int opcion = super.open_Scanner().nextInt();
 		if(opcion>0 & opcion<=5) {
-			switch(opcion) {
-				case 1: System.out.println(mostrar_Datos());
-						panel_Paciente();
-						break;
-						
-				case 2: setEmergencia(false);
-						Turno.estado_Turno();
-						elegir_Turno();
-						break;
-						
-				case 3: setEmergencia(true);
-						Turno.estado_Turno();
-						elegir_Turno();
-						break;
-						
-				case 4: generar_HC().generar_pacienteHC();
-						break;
-					
-				case 5: cancelar_Turno();
-						break;
-				
-				case 6: super.panel_Persona();
-						break;
-					
+			switch (opcion) {
+				case 1 -> {
+					System.out.println(mostrar_Datos());
+					panel_Paciente();
+				}
+				case 2 -> {
+					setEmergencia(false);
+					Turno.estado_Turno();
+					elegir_Turno();
+				}
+				case 3 -> {
+					setEmergencia(true);
+					Turno.estado_Turno();
+					elegir_Turno();
+				}
+				case 4 -> generar_HC().generar_pacienteHC();
+				case 5 -> cancelar_Turno();
+				case 6 -> super.panel_Persona();
 			}
 		}else {
 			System.out.println("INGRESO UNA OPCION NO VALIDA");
@@ -86,23 +75,21 @@ public class Paciente extends Persona{
 		System.out.println("¿Confirma el turno seleccionado? [SI = 1 - NO = 2]");
 		int opcion = super.open_Scanner().nextInt();
 		if(opcion == 1 || opcion == 2) {
-			switch(opcion) {
-											//INSERT INTO `muelas_kd`.`paciente` (`id_persona`, `emergencia`) VALUES ('18224411', '1');
-				case 1: String ELEGIR_TURNO = "UPDATE `dr_muelas`.`turno` SET `disponibilidad` = '1' WHERE (`id` = '"+turno+"');";
-				
-						try{
-								
-							Statement sql = super.open_Connection().createStatement();
-							sql.executeUpdate(ELEGIR_TURNO);
-							System.out.println("El turno n°"+turno+ " ha sido registrado con éxito.");
-						}catch (Exception e){
-					        System.out.println("ERROR AL CARGAR EL TURNO"+e);
-					        }	
-						super.close_Connection();	
-						break;
-						
-				case 2: System.out.println("A DECIDIDO CANCELAR LA SELECCION DE TURNO");
-						break;
+			switch (opcion) {
+				//INSERT INTO `muelas_kd`.`paciente` (`id_persona`, `emergencia`) VALUES ('18224411', '1');
+				case 1 -> {
+					String ELEGIR_TURNO = "UPDATE `dr_muelas`.`turno` SET `disponibilidad` = '1' WHERE (`id` = '" + turno + "');";
+					try {
+
+						Statement sql = super.open_Connection().createStatement();
+						sql.executeUpdate(ELEGIR_TURNO);
+						System.out.println("El turno n°" + turno + " ha sido registrado con éxito.");
+					} catch (Exception e) {
+						System.out.println("ERROR AL CARGAR EL TURNO" + e);
+					}
+					super.close_Connection();
+				}
+				case 2 -> System.out.println("A DECIDIDO CANCELAR LA SELECCION DE TURNO");
 			}
 		}else {
 			System.out.println("NO INGRESO NINGUNA OPCION O INGRESO UNA OPCION NO VALIDA");

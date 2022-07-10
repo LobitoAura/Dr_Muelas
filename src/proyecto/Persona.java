@@ -116,19 +116,16 @@ public class Persona {
 	}
 	
 	public Paciente generar_Paciente() {
-		Paciente paciente = new Paciente(getNombre(),getApellido(),getDni(),getEdad(),
+		return new Paciente(getNombre(),getApellido(),getDni(),getEdad(),
 		getDomicilio(),getTelefono(),getGenero(),getEmail(),getUsuario(),getClave(),false);
-		return paciente;
 	}
 	
 	public Scanner open_Scanner() {
-		Scanner teclado = new Scanner(System.in);
-		return teclado;
+		return new Scanner(System.in);
 	}
 	
 	public Connection open_Connection() {
-		Connection sql_DB = ConnectionDB.getConnection();
-		return sql_DB;
+		return ConnectionDB.getConnection();
 	}
 	
 	public void close_Connection() {
@@ -136,13 +133,14 @@ public class Persona {
 	}
 	
 	public void panel_Persona(){
-		System.out.println("********************************************"+"\n"+
-						"**      REGISTRAR O INICIAR SESIÓN \t  **"+"\n"+
-						"**         DIGITE UN NUMERO        \t  **"+"\n"+
-						"** --> Opcion 1 : Iniciar Sesion   \t  **"+"\n"+
-						"** --> Opcion 2 : Registrar        \t  **"+"\n"+
-						"** --> Opcion 3 : Salir            \t  **"+"\n"+
-						"********************************************");
+		System.out.println("""
+				********************************************
+				**      REGISTRAR O INICIAR SESIÓN \t  **
+				**         DIGITE UN NUMERO        \t  **
+				** --> Opcion 1 : Iniciar Sesion   \t  **
+				** --> Opcion 2 : Registrar        \t  **
+				** --> Opcion 3 : Salir            \t  **
+				********************************************""");
 		int opcion = open_Scanner().nextInt();
 		switch(opcion) {
 			case 1: iniciar_Usuario();
@@ -208,10 +206,11 @@ public class Persona {
 		setDomicilio(open_Scanner().next());
 		System.out.println("Ingrese Telefono: ");
 		setTelefono(open_Scanner().next());
-		System.out.println("Ingrese Genero: "+"\n"+
-				"--> Masculino = M "+"\n"+
-				"--> Femenino = F "+"\n"+
-				"--> No especificar = - ");
+		System.out.println("""
+				Ingrese Genero:\s
+				--> Masculino = M\s
+				--> Femenino = F\s
+				--> No especificar = -\s""");
 		String genero = open_Scanner().next();
 		if(genero.length() == 1 ) {
 			setGenero(genero);
@@ -247,7 +246,7 @@ public class Persona {
 				"Email: "+getEmail()+"\n";
 	}
 	
-	//Subira los datos del metodo registrarUsuario a la base de datos
+	//Subir los datos del metodo registrarUsuario a la base de datos
 	public void insertarDB() {
 		String INSERT_PERSONA = "INSERT INTO persona(dni,nombre,apellido,edad,domicilio,telefono,genero,email,usuario,clave) VALUES(?,?,?,?,?,?,?,?,?,?)";
 		try{
