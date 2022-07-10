@@ -39,8 +39,7 @@ public class Administracion {
 				admin.generar_Turno();
 				break;
 				
-		case 2:	Persona persona = new Persona();
-				persona.panel_Persona();
+		case 2:	generar_Informe();
 				break;
 		}
 		teclado.close();
@@ -51,16 +50,15 @@ public class Administracion {
 	                          + "Espere un instante...");
 		String CONTAR_ATENCIONES = "SELECT * FROM turno";
 
-		Statement sql;
 		try {
-			sql = ConnectionDB.getConnection().createStatement();
+			Statement sql = ConnectionDB.getConnection().createStatement();
 		    ResultSet rs = sql.executeQuery(CONTAR_ATENCIONES);
 		    int atenciones = 0;
 		    while (rs.next()) {
 		    	atenciones+= rs.getInt("disponibilidad");
-		    	System.out.println ("**RESULTADO DEL INFORME* " + "\n"
-		    						+ "Pacientes atendidos: " + atenciones );
 		    }
+		    System.out.println ("**RESULTADO DEL INFORME* " + "\n"
+								+ "Pacientes atendidos: " + atenciones );
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
