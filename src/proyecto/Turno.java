@@ -15,7 +15,7 @@ public class Turno {
 		int hora = teclado.nextInt();
 		System.out.println("¿Cuantos turnos va a crear?");	   
 		int cantidad = teclado.nextInt();	
-			if (hora+cantidad>=24){
+			if ((hora+cantidad)>=24){
 				System.out.println("La cantidad de turnos supera el horario de atención, se establecerá una cantidad de "+23-hora+" turnos./n";
 				cantidad=23-hora;
 			}
