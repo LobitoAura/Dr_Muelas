@@ -9,21 +9,25 @@ public class Turno {
 	
 	public static void generar_Turno() {
 		Scanner teclado = new Scanner(System.in);
-		System.out.println("�Cuantos turnos va a crear?");
-		int cantidad = teclado.nextInt();
 		System.out.println("Ingrese la fecha:");
 		String fecha = teclado.next();	
-		System.out.println("Ingrese la hora:");
+		System.out.println("Ingrese la hora de apertura: (Cada turno dura 1hs)";
 		int hora = teclado.nextInt();
+		System.out.println("¿Cuantos turnos va a crear?");	   
+		int cantidad = teclado.nextInt();	
+			if (hora+cantidad=24){
+				System.out.println("La cantidad de turnos supera el horario de atención, se establecerá una cantidad de "+23-hora+" turnos./n";
+				cantidad=23-hora;
+			}
  
 		String INSERT_TURNO = "INSERT INTO turno(categoria,fecha,disponibilidad) VALUES(?,?,?)";
 
 		boolean flag;
 			try{
 				PreparedStatement sql = ConnectionDB.getConnection().prepareStatement(INSERT_TURNO);
-				for(int i=0; i<cantidad; i++) {
+				for(int i=1; i<=cantidad*2; i++) {
 					String fecha_turno = fecha+" "+hora+" Hs.";
-					flag = i < (cantidad / 2);
+					flag = i < (cantidad);
 			        //set the values for the prepared statement
 			        sql.setBoolean(1, flag); // El segundo valor es 0=False,1=Verdadero
 			        sql.setString(2, fecha_turno);
@@ -33,6 +37,9 @@ public class Turno {
 			        sql.executeUpdate();
 			        
 			        hora = hora + 1;
+				if (i=cantidad){
+					hora = hora - cantidad;
+				}
 				}
 				System.out.println("LOS TURNOS SE ACTUALIZARON A LA BASE DE DATOS");
 		    }catch (Exception e){
@@ -66,7 +73,7 @@ public class Turno {
             		sector = "SALA B (Mayores)";
             	}
             	//mostrar valores
-            	System.out.println("-> N�"+sql_Id+"		"+sector+"	Estado:"+disponibilidad+"		"+sql_Fecha);
+            	System.out.println("-> N°"+sql_Id+"		"+sector+"	Estado:"+disponibilidad+"		"+sql_Fecha);
             }
             rs.close();
       
