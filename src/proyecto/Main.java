@@ -11,7 +11,7 @@ public class Main {
 		System.out.println("****************************************************"+"\n"+
 						"**   BIENVENIDO AL CONSULTORIO Dr. Muelas \t  **"+"\n"+
 						"**           DIGITE UN NUMERO             \t  **"+"\n"+
-						"** --> Opcion 1 : Generar turnos          \t  **"+"\n"+
+						"** --> Opcion 1 : Administración          \t  **"+"\n"+
 						"** --> Opcion 2 : Iniciar registro        \t  **"+"\n"+
 						"** --> Opcion 3 : Información             \t  **"+"\n"+
 						"****************************************************");
@@ -19,7 +19,7 @@ public class Main {
 		switch(opcion) {
 		
 		case 1: Administracion admin = new Administracion("Secretaria");
-				admin.generar_Turno();
+				admin.panel_admin(admin.getFuncion());
 				break;
 				
 		case 2:	Persona persona = new Persona();

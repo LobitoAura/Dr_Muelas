@@ -7,13 +7,12 @@ import java.util.Scanner;
 
 public class Turno {
 	
-	public static void generar_Turno(String cargo) {
+	public static void generar_Turno() {
 		Scanner teclado = new Scanner(System.in);
-		System.out.println("BIENVENIDO ADMINISTRADOR - FUNCION: "+cargo);
 		System.out.println("¿Cuantos turnos va a crear?");
 		int cantidad = teclado.nextInt();
 		System.out.println("Ingrese la fecha:");
-		String fecha = teclado.nextLine();	
+		String fecha = teclado.next();	
 		System.out.println("Ingrese la hora:");
 		int hora = teclado.nextInt();
  
