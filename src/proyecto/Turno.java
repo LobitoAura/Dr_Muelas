@@ -27,7 +27,7 @@ public class Turno {
 				PreparedStatement sql = ConnectionDB.getConnection().prepareStatement(INSERT_TURNO);
 				for(int i=1; i<=cantidad*2; i++) {
 					String fecha_turno = fecha+" "+hora+" Hs.";
-					flag = i < (cantidad);
+					flag = i <= (cantidad);
 			        //set the values for the prepared statement
 			        sql.setBoolean(1, flag); // El segundo valor es 0=False,1=Verdadero
 			        sql.setString(2, fecha_turno);
@@ -38,8 +38,8 @@ public class Turno {
 			        
 			        hora = hora + 1;
 				if (i=cantidad){
-					hora = hora - cantidad;
-				}
+					hora = hora - cantidad;		//La hora vuelve a la establecida por el admin para la otra sala
+				}					//Y luego continúa incrementando hasta completar los turnos
 				}
 				System.out.println("LOS TURNOS SE ACTUALIZARON A LA BASE DE DATOS");
 		    }catch (Exception e){
