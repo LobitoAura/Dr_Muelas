@@ -38,13 +38,14 @@ public class Paciente extends Persona{
 	
 	public void panel_Paciente(){
 		System.out.println("********************************************"+"\n"+
-				"** \t ELEGIR TIPO DE ATENCION    \t  **"+"\n"+
-				"** \t DIGITE UN NUMERO     \t\t  **"+"\n"+
-				"** --> Opcion 1 : Mostrar mis datos   \t\t  **"+"\n"+
+				"** \t BIENVENIDO "+" "+super.getUsuario()+"\t  **"+"\n"+
+				"** \t ELEGIR TIPO DE ATENCION     \t  **"+"\n"+
+				"** \t DIGITE UN NUMERO      \t\t  **"+"\n"+
+				"** --> Opcion 1 : Mostrar mis datos   \t  **"+"\n"+
 				"** --> Opcion 2 : Obtener Turno Normal \t  **"+"\n"+
 				"** --> Opcion 3 : obtener Turno Emergencia \t  **"+"\n"+
-				"** --> Opcion 4 : Generar Historia Clinica "+"\n"+
-				"** --> Opcion 5 : Cancelar un Turno "+"\n"+
+				"** --> Opcion 4 : Generar Historia Clinica **"+"\n"+
+				"** --> Opcion 5 : Cancelar un Turno **"+"\n"+
 				"** --> Opcion 6 : Cerrar Sesion \t  **"+"\n"+
 				"********************************************");
 		int opcion = super.open_Scanner().nextInt();

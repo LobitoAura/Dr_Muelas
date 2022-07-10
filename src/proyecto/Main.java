@@ -12,7 +12,7 @@ public class Main {
 						"**   BIENVENIDO AL CONSULTORIO Dr. Muelas \t  **"+"\n"+
 						"**           DIGITE UN NUMERO             \t  **"+"\n"+
 						"** --> Opcion 1 : Administración          \t  **"+"\n"+
-						"** --> Opcion 2 : Iniciar registro        \t  **"+"\n"+
+						"** --> Opcion 2 : Usuario                 \t  **"+"\n"+
 						"** --> Opcion 3 : Información             \t  **"+"\n"+
 						"****************************************************");
 		int opcion = teclado.nextInt();

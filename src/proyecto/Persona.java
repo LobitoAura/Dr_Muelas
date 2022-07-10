@@ -146,7 +146,6 @@ public class Persona {
 		int opcion = open_Scanner().nextInt();
 		switch(opcion) {
 			case 1: iniciar_Usuario();
-					generar_Paciente().panel_Paciente();
 					break;
 					
 			case 2:	registrar_Usuario();
@@ -172,7 +171,6 @@ public class Persona {
 
 			ResultSet rs = sql.executeQuery(SELECT_USUARIO_CLAVE);
 			if (rs.next()) {
-		    	System.out.println("BIENVENIDO "+" "+usuario);
 		    	
 			    setNombre(rs.getString("nombre"));
 			    setApellido(rs.getString("apellido"));
@@ -184,7 +182,8 @@ public class Persona {
 			    setEmail(rs.getString("email"));
 			    setUsuario(rs.getString("usuario"));
 			    setClave(rs.getString("clave"));
-			      
+			    //Si las credenciales son correctas se instancia un paciente
+			    generar_Paciente().panel_Paciente();      
 			//Retiene los errores y lo muestra
 			}else {
 		    	System.out.println("Usuario o contraseña incorrectos");
