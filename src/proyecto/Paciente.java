@@ -114,16 +114,19 @@ public class Paciente extends Persona{
 			Statement sql = open_Connection().createStatement();
 
 			ResultSet rs = sql.executeQuery(MOSTRAR_CANCELAR);
+			int flag = 0;
 			while (rs.next()) {
-
+				flag = 1;
 				System.out.println("Turno N°"+rs.getInt("id")+" Fecha: "+rs.getString("fecha"));
+			}if(flag == 0) {
+				System.out.print("No tiene ningun turno");
+				super.close_Connection();
+			}else {
+				cancelar_Turno();
 			}
-			cancelar_Turno();
-			super.close_Connection();
 		}catch (Exception e){
 			System.out.println("ERROR AL BUSCAR DATOS: "+e);
 		}
-		System.out.print("No tiene ningun turno");
 	}
 	
 	public void cancelar_Turno() {
