@@ -8,15 +8,16 @@ import java.util.Scanner;
 public class Turno {
 	
 	public static void generar_Turno() {
+		
 		Scanner teclado = new Scanner(System.in);
 		System.out.println("Ingrese la fecha:");
 		String fecha = teclado.next();	
-		System.out.println("Ingrese la hora de apertura: (Cada turno dura 1hs)";
+		System.out.println("Ingrese la hora de apertura: (Cada turno dura 1hs");
 		int hora = teclado.nextInt();
-		System.out.println("Â¿Cuantos turnos va a crear?");	   
+		System.out.println("¿Cuantos turnos va a crear?");	   
 		int cantidad = teclado.nextInt();	
 			if ((hora+cantidad)>=24){
-				System.out.println("La cantidad de turnos supera el horario de atenciÃ³n, se establecerÃ¡ una cantidad de "+23-hora+" turnos./n";
+				System.out.println("La cantidad de turnos supera el horario de atención, se establecerá una cantidad de "+(23-hora)+" turnos./n");
 				cantidad=23-hora;
 			}
  
@@ -37,10 +38,10 @@ public class Turno {
 			        sql.executeUpdate();
 			        
 			        hora = hora + 1;
-				if (i=cantidad){
-					hora = hora - cantidad;		//La hora vuelve a la establecida por el admin para la otra sala
-				}					//Y luego continÃºa incrementando hasta completar los turnos
-				}
+				if (i==cantidad){
+					hora = hora - cantidad;	//La hora vuelve a la establecida por el admin para la otra sala
+				}							//Y luego continúa incrementando hasta completar los turnos
+			}
 				System.out.println("LOS TURNOS SE ACTUALIZARON A LA BASE DE DATOS");
 		    }catch (Exception e){
 		    	System.out.println(e);
@@ -49,8 +50,14 @@ public class Turno {
 		teclado.close();
 	}
 	
-	public static void estado_Turno() {
-		String SELECT_TURNO = "SELECT * FROM turno;";
+	public static void estado_Turno(Boolean comprobar) {
+		int test;
+		if(comprobar) {
+			test = 1;
+		}else{
+			test = 0;
+		}
+		String SELECT_TURNO = "SELECT * FROM `turno` WHERE `categoria` = '"+test+"' ";
 		
 		try{
 			
@@ -64,16 +71,17 @@ public class Turno {
             	boolean sql_sector = rs.getBoolean("categoria");
             	String sql_Fecha = rs.getString("fecha");
             	boolean sql_disponibilidad = rs.getBoolean("disponibilidad");
-            	
-            	if (!sql_disponibilidad & !sql_sector) {
-            		disponibilidad = "Disponible";
-            		sector = "SALA A (Menores)";
-            	}else {
-            		disponibilidad = "No Disponible";
-            		sector = "SALA B (Mayores)";
+            	if(!sql_disponibilidad) {
+	            	if (sql_sector == comprobar) {
+	            		disponibilidad = "Disponible";
+	            		sector = "SALA A (Menores)";
+	            	}else {
+	            		disponibilidad = "Disponible";
+	            		sector = "SALA B (Mayores)";
+	            	}
+	            	//mostrar valores
+	            	System.out.println("-> N°"+sql_Id+"		"+sector+"	Estado:"+disponibilidad+"		"+sql_Fecha);
             	}
-            	//mostrar valores
-            	System.out.println("-> NÂ°"+sql_Id+"		"+sector+"	Estado:"+disponibilidad+"		"+sql_Fecha);
             }
             rs.close();
       

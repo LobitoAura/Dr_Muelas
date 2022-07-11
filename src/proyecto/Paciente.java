@@ -28,7 +28,7 @@ public class Paciente extends Persona{
 	}
 	
 	public boolean sector_Edad() {
-		return super.getEdad() > 14;
+		return (super.getEdad() > 13);
 	}
 	
 	public void panel_Paciente(){
@@ -49,15 +49,16 @@ public class Paciente extends Persona{
 				case 1 -> {
 					System.out.println(mostrar_Datos());
 					panel_Paciente();
+					System.out.println(sector_Edad());
 				}
 				case 2 -> {
 					setEmergencia(false);
-					Turno.estado_Turno();
+					Turno.estado_Turno(sector_Edad());
 					elegir_Turno();
 				}
 				case 3 -> {
 					setEmergencia(true);
-					Turno.estado_Turno();
+					Turno.estado_Turno(sector_Edad());
 					elegir_Turno();
 				}
 				case 4 -> generar_HC().generar_pacienteHC();
@@ -79,10 +80,12 @@ public class Paciente extends Persona{
 				//INSERT INTO `muelas_kd`.`paciente` (`id_persona`, `emergencia`) VALUES ('18224411', '1');
 				case 1 -> {
 					String ELEGIR_TURNO = "UPDATE `dr_muelas`.`turno` SET `disponibilidad` = '1' WHERE (`id` = '" + turno + "');";
+					String ACTUALIZAR_ID_TURNO = "UPDATE `dr_muelas`.`turno` SET `id_paciente` = ('"+super.getDni()+"') WHERE (`id` = '"+turno+"');";
 					try {
 
 						Statement sql = super.open_Connection().createStatement();
 						sql.executeUpdate(ELEGIR_TURNO);
+						sql.executeUpdate(ACTUALIZAR_ID_TURNO);
 						System.out.println("El turno n°" + turno + " ha sido registrado con éxito.");
 					} catch (Exception e) {
 						System.out.println("ERROR AL CARGAR EL TURNO" + e);

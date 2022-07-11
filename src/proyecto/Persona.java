@@ -271,12 +271,13 @@ public class Persona {
         }catch (Exception e){
         	System.out.println("ERROR AL REGISTRAR PERSONA: "+e);
         }
-		String INSERT_PACIENTE = "INSERT INTO `dr_muelas`.`paciente` (`id_dni`) VALUES (?);";
+		String INSERT_PACIENTE = "INSERT INTO `dr_muelas`.`paciente` (`id_dni`,`emergencia`) VALUES (?,?);";
 		try{
             PreparedStatement sql = open_Connection().prepareStatement(INSERT_PACIENTE);
         
             //Setea los valores oara subirse a la base de datos
             sql.setInt(1,getDni());
+            sql.setBoolean(2,generar_Paciente().isEmergencia());
             
             //Executa los comandos
             sql.executeUpdate();
