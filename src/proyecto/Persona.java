@@ -120,7 +120,7 @@ public class Persona {
 		getDomicilio(),getTelefono(),getGenero(),getEmail(),getUsuario(),getClave(),false);
 	}
 	
-	public Scanner open_Scanner() {
+	public static Scanner open_Scanner() {
 		return new Scanner(System.in);
 	}
 	

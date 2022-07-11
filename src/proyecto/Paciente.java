@@ -107,8 +107,52 @@ public class Paciente extends Persona{
 		}
 	}
 	
+	public void mostrar_Turno() {
+		String MOSTRAR_CANCELAR ="SELECT * FROM `dr_muelas`.`turno` WHERE ( id_paciente = '" + super.getDni() + "')";
+		try{
+			
+			Statement sql = open_Connection().createStatement();
+
+			ResultSet rs = sql.executeQuery(MOSTRAR_CANCELAR);
+			while (rs.next()) {
+
+				System.out.println("Turno N°"+rs.getInt("id")+" Fecha: "+rs.getString("fecha"));
+			    
+			}
+		}catch (Exception e){
+			System.out.println("ERROR AL BUSCAR DATOS: "+e);
+		}
+	}
+	
 	public void cancelar_Turno() {
 		
+		mostrar_Turno();
+		System.out.print("Ingrese el N° del turno a cancelar: ");
+		int id_turno = Persona.open_Scanner().nextInt();
+		System.out.print("¿Confirma los cambios? [SI =1 NO= 2]");
+		int opcion = Persona.open_Scanner().nextInt();
+		if(opcion == 1 || opcion == 2) {
+			switch (opcion) {
+				case 1 -> {
+					String UPDATE_DISPONIBILIDAD = "UPDATE `dr_muelas`.`turno` SET `disponibilidad` = '0' WHERE (`id` = '" + id_turno + "');";
+					String UPDATE_CANCELAR = "UPDATE `dr_muelas`.`turno` SET `id_paciente` = NULL WHERE (`id` = '"+id_turno+"');";
+					try {
+
+						Statement sql = super.open_Connection().createStatement();
+						sql.executeUpdate(UPDATE_DISPONIBILIDAD);
+						sql.executeUpdate(UPDATE_CANCELAR);
+						System.out.println("El turno n°" + id_turno + " Fue cancelado.");
+					} catch (Exception e) {
+						System.out.println("ERROR AL CANCELAR TURNO" + e);
+					}
+					super.close_Connection();
+				}
+				case 2 -> System.out.println("NO SE HAN CANCELADO TURNOS");
+			}
+		}else {
+			System.out.println("NO INGRESO NINGUNA OPCION O INGRESO UNA OPCION NO VALIDA");
+		}
+	
 	}
 	
 	@Override
