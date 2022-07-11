@@ -28,7 +28,7 @@ public class Paciente extends Persona{
 	}
 	
 	public boolean sector_Edad() {
-		return (super.getEdad() > 13);
+		return (super.getEdad() < 13);
 	}
 	
 	public void panel_Paciente(){
@@ -47,9 +47,9 @@ public class Paciente extends Persona{
 		if(opcion>0 & opcion<=5) {
 			switch (opcion) {
 				case 1 -> {
-					System.out.println(mostrar_Datos());
+					//System.out.println(probar_Edad());
+					System.out.println(super.mostrar_Datos());
 					panel_Paciente();
-					System.out.println(sector_Edad());
 				}
 				case 2 -> {
 					setEmergencia(false);
@@ -67,6 +67,14 @@ public class Paciente extends Persona{
 			}
 		}else {
 			System.out.println("INGRESO UNA OPCION NO VALIDA");
+		}
+	}
+	
+	public String probar_Edad() {
+		if(sector_Edad()) {
+			return "Es menor";
+		}else {
+			return "Es mayor";
 		}
 	}
 	

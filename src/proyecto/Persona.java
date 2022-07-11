@@ -226,10 +226,14 @@ public class Persona {
 		System.out.println(mostrar_Datos());
 		System.out.println("¿Confirma los datos ingresados? [SI = 1 - NO = 2]");
 		int opcion = open_Scanner().nextInt();
-		if(opcion == 1) {
-			insertarDB();
-			}if(opcion == 2) {
-				System.out.println("A DECIDIDO CANCELAR EL REGISTRO");
+		if(opcion>0 & opcion<=2) {
+			switch(opcion) {
+				case 1: insertarDB();
+						break;
+				case 2: System.out.println("A DECIDIDO CANCELAR EL REGISTRO");
+						break;
+			}
+		
 		}else {
 			System.out.println("NO INGRESO NINGUNA OPCION O INGRESO UNA OPCION NO VALIDA");
 		}
