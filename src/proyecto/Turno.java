@@ -72,7 +72,7 @@ public class Turno {
             	String sql_Fecha = rs.getString("fecha");
             	boolean sql_disponibilidad = rs.getBoolean("disponibilidad");
             	if(!sql_disponibilidad) {
-	            	if (sql_sector == comprobar) {
+	            	if (sql_sector = comprobar) {
 	            		disponibilidad = "Disponible";
 	            		sector = "SALA A (Menores)";
 	            	}else {

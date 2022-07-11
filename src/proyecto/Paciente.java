@@ -62,7 +62,7 @@ public class Paciente extends Persona{
 					elegir_Turno();
 				}
 				case 4 -> generar_HC().generar_pacienteHC();
-				case 5 -> cancelar_Turno();
+				case 5 -> mostrar_Turno();
 				case 6 -> super.panel_Persona();
 			}
 		}else {
@@ -117,16 +117,17 @@ public class Paciente extends Persona{
 			while (rs.next()) {
 
 				System.out.println("Turno N°"+rs.getInt("id")+" Fecha: "+rs.getString("fecha"));
-			    
 			}
+			cancelar_Turno();
+			super.close_Connection();
 		}catch (Exception e){
 			System.out.println("ERROR AL BUSCAR DATOS: "+e);
 		}
+		System.out.print("No tiene ningun turno");
 	}
 	
 	public void cancelar_Turno() {
 		
-		mostrar_Turno();
 		System.out.print("Ingrese el N° del turno a cancelar: ");
 		int id_turno = Persona.open_Scanner().nextInt();
 		System.out.print("¿Confirma los cambios? [SI =1 NO= 2]");
