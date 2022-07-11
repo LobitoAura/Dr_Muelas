@@ -61,7 +61,10 @@ public class Paciente extends Persona{
 					Turno.estado_Turno(sector_Edad());
 					elegir_Turno();
 				}
-				case 4 -> generar_HC().generar_pacienteHC();
+				case 4 -> {
+					generar_HC().generar_pacienteHC();
+					generar_HC().insertarDB();
+				}
 				case 5 -> mostrar_Turno();
 				case 6 -> super.panel_Persona();
 			}
